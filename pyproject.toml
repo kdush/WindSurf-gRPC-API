@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "windsurf-api"
+version = "3.0.0"
+description = "Unofficial Python SDK for Windsurf IDE — Reverse-engineered gRPC protocol"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "lixin"},
+]
+keywords = ["windsurf", "codeium", "grpc", "reverse-engineering", "api", "sdk"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/YOUR_USERNAME/windsurf-api"
+Repository = "https://github.com/YOUR_USERNAME/windsurf-api"
+Issues = "https://github.com/YOUR_USERNAME/windsurf-api/issues"
+
+[project.scripts]
+windsurf-api = "windsurf_api.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["windsurf_api*"]

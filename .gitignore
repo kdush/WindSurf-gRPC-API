@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets - NEVER commit these!
+accounts.db
+*.db
+*.db-journal
+_test_results.json
+# Exclude temp test scripts (but NOT __init__.py / __main__.py)
+_[!_]*.py
+browser_profiles/
