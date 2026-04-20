@@ -24,9 +24,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USERNAME/windsurf-api"
-Repository = "https://github.com/YOUR_USERNAME/windsurf-api"
-Issues = "https://github.com/YOUR_USERNAME/windsurf-api/issues"
+Homepage = "https://github.com/fendoushaonian/WindSurf-gRPC-API"
+Repository = "https://github.com/fendoushaonian/WindSurf-gRPC-API"
+Issues = "https://github.com/fendoushaonian/WindSurf-gRPC-API/issues"
 
 [project.scripts]
 windsurf-api = "windsurf_api.cli:main"

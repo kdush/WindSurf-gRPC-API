@@ -1,4 +1,4 @@
-"""windsurf-api — Windsurf IDE 逆向协议 Python 库
+﻿"""windsurf-api — Windsurf IDE 逆向协议 Python 库
 
 非官方 Python SDK，通过逆向工程实现 Windsurf IDE 的完整 gRPC 协议。
 覆盖 13 个服务、560+ 方法，零依赖 (仅用 Python 标准库)。
@@ -11,7 +11,7 @@
     print(ws.get_user_status())     # 用户状态 + 额度
     print(ws.get_models())          # 可用 AI 模型列表
 
-GitHub:  https://github.com/YOUR_USERNAME/windsurf-api
+GitHub:  https://github.com/fendoushaonian/WindSurf-gRPC-API
 License: MIT
 """
 
