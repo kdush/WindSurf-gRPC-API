@@ -1,4 +1,4 @@
-﻿"""windsurf-api — Windsurf IDE 逆向协议 Python 库
+"""windsurf-api — Windsurf IDE 逆向协议 Python 库
 
 非官方 Python SDK，通过逆向工程实现 Windsurf IDE 的完整 gRPC 协议。
 覆盖 13 个服务、560+ 方法，零依赖 (仅用 Python 标准库)。
@@ -25,6 +25,10 @@ from .models import (
     TeamsTier, BillingStrategy, ExperimentKey,
 )
 from .auth import FirebaseUser
+
+# 反代 & 工具 (按需导入)
+# from .proxy import ProxyServer, run_proxy, KeyPool
+# from .tools import AccountFactory, ProDaemon, CascadeBot
 
 __all__ = [
     # 主入口

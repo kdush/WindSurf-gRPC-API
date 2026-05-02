@@ -12,6 +12,8 @@
     python -m windsurf_api scan <api_key>                  扫描 API 端点
     python -m windsurf_api providers                       检查 OAuth providers
     python -m windsurf_api proto <ls_binary_path>          提取 gRPC 协议
+    python -m windsurf_api proxy --keys k1,k2 --port 8080  启动反代服务器
+    python -m windsurf_api daemon                          启动 Pro 注入守护
 """
 import sys
 import json
@@ -214,6 +216,74 @@ def cmd_proto(args):
         print()
 
 
+def cmd_proxy(args):
+    """启动 OpenAI 兼容反代"""
+    import os
+    keys = []
+    port = 8080
+    auth = ""
+    verbose = False
+
+    i = 0
+    while i < len(args):
+        if args[i] in ("--keys", "-k") and i + 1 < len(args):
+            keys.extend([k.strip() for k in args[i + 1].split(",") if k.strip()])
+            i += 2
+        elif args[i] in ("--key-file", "-f") and i + 1 < len(args):
+            with open(args[i + 1]) as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#"):
+                        keys.append(line)
+            i += 2
+        elif args[i] in ("--port", "-p") and i + 1 < len(args):
+            port = int(args[i + 1])
+            i += 2
+        elif args[i] in ("--auth", "-a") and i + 1 < len(args):
+            auth = args[i + 1]
+            i += 2
+        elif args[i] in ("--verbose", "-v"):
+            verbose = True
+            i += 1
+        else:
+            i += 1
+
+    env_keys = os.environ.get("WINDSURF_KEYS", "")
+    if env_keys:
+        keys.extend([k.strip() for k in env_keys.split(",") if k.strip()])
+
+    if not keys:
+        print("用法: proxy --keys sk-ws-key1,sk-ws-key2 [--port 8080] [--auth token]")
+        print("  或: proxy --key-file keys.txt")
+        print("  或: 设置环境变量 WINDSURF_KEYS")
+        return
+
+    keys = list(dict.fromkeys(keys))
+    from .proxy.server import ProxyServer
+    server = ProxyServer(keys=keys, port=port, auth_token=auth, verbose=verbose)
+    server.start()
+
+
+def cmd_daemon(args):
+    """启动 Pro 注入守护进程"""
+    interval = 30
+    key = ""
+    i = 0
+    while i < len(args):
+        if args[i] == "--interval" and i + 1 < len(args):
+            interval = int(args[i + 1])
+            i += 2
+        elif args[i] == "--key" and i + 1 < len(args):
+            key = args[i + 1]
+            i += 2
+        else:
+            i += 1
+
+    from .tools.pro_daemon import ProDaemon
+    daemon = ProDaemon(check_interval=interval, api_key=key)
+    daemon.start()
+
+
 COMMANDS = {
     "status": cmd_status,
     "register": cmd_register,
@@ -225,6 +295,8 @@ COMMANDS = {
     "scan": cmd_scan,
     "providers": cmd_providers,
     "proto": cmd_proto,
+    "proxy": cmd_proxy,
+    "daemon": cmd_daemon,
 }
 
 

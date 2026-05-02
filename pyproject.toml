@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "windsurf-api"
 version = "3.0.0"
-description = "Reverse-engineered Windsurf IDE gRPC protocol → Python SDK | 13 services, 560+ methods, zero dependencies"
+description = "Reverse-engineered Windsurf IDE gRPC protocol → Python SDK | 13 services, 573 methods, zero dependencies"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.12"

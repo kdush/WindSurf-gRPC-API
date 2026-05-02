@@ -153,7 +153,7 @@ class WindsurfClient:
         return self.seat.get_plan_status()
 
     def check_login_method(self, email: str):
-        return self.seat.check_user_login_method(email)
+        return self.seat.check_user_login_method(email=email)
 
     # ═══════════════════════════════════════════════════
     #  模型
@@ -203,10 +203,10 @@ class WindsurfClient:
     # ═══════════════════════════════════════════════════
 
     def process_referral(self, code: str):
-        return self.seat.process_referral_code(code)
+        return self.seat.process_referral_code(referralCode=code)
 
     def check_referral(self, code: str):
-        return self.seat.is_valid_referral_code(code)
+        return self.seat.is_valid_referral_code(referralCode=code)
 
     # ═══════════════════════════════════════════════════
     #  GitHub / Netlify
@@ -229,7 +229,7 @@ class WindsurfClient:
         return self.seat.get_teams_features()
 
     def create_team(self, name: str):
-        return self.seat.create_multi_tenant_team(name)
+        return self.seat.create_multi_tenant_team(teamName=name)
 
     # ═══════════════════════════════════════════════════
     #  LS 实验
@@ -252,13 +252,13 @@ class WindsurfClient:
     # ═══════════════════════════════════════════════════
 
     def upgrade_plan_internal(self, secret: str, email: str, **kw):
-        return self.seat.update_plan_details_internal(secret, email, **kw)
+        return self.seat.update_plan_details_internal(secret=secret, email=email, **kw)
 
     def add_credits_internal(self, secret: str, **kw):
-        return self.seat.add_extra_flex_credits_internal(secret, **kw)
+        return self.seat.add_extra_flex_credits_internal(secret=secret, **kw)
 
     def reset_quota_internal(self, secret: str, **kw):
-        return self.seat.reset_quota_usage_internal(secret, **kw)
+        return self.seat.reset_quota_usage_internal(secret=secret, **kw)
 
     # ═══════════════════════════════════════════════════
     #  通用调用
