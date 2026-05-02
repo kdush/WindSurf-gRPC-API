@@ -18,6 +18,16 @@ build/
 Thumbs.db
 desktop.ini
 
+# Rust
+windsurf-toolkit/target/
+**/*.rs.bk
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
 # Secrets - NEVER commit these!
 accounts.db
 *.db

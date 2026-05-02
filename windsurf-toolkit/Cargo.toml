@@ -1,0 +1,56 @@
+[package]
+name = "windsurf-toolkit"
+version = "1.0.0"
+edition = "2021"
+authors = ["lixin"]
+description = "Windsurf IDE 全功能工具箱 — 反代/注入/监控/面板 (单文件 .exe)"
+license = "MIT"
+readme = "README.md"
+
+[[bin]]
+name = "windsurf-toolkit"
+path = "src/main.rs"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# Web framework
+axum = { version = "0.7", features = ["macros"] }
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls"], default-features = false }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Utilities
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+tokio-stream = "0.1"
+futures-util = "0.3"
+parking_lot = "0.12"
+async-stream = "0.3"
+bytes = "1"
+
+# GUI (native desktop)
+eframe = { version = "0.31", default-features = false, features = ["default_fonts", "glow", "persistence"] }
+egui_extras = { version = "0.31", features = ["image", "svg"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
+rfd = "0.15"
+
+[profile.release]
+opt-level = "s"
+lto = false
+strip = true
+codegen-units = 1
+panic = "abort"

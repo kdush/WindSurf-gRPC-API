@@ -2,16 +2,17 @@
 
 # WindSurf-gRPC-API
 
-**Windsurf IDE 全协议逆向 Python SDK**
+**Windsurf IDE 全协议逆向 — Python SDK + Rust 工具箱**
 
 通过逆向 Windsurf Language Server 二进制文件，提取全部 13 个 gRPC 服务、567+ RPC 方法。<br>
-内置 OpenAI / Anthropic / Gemini 三协议兼容反代服务器。零依赖。
+内置 OpenAI / Anthropic / Gemini 三协议兼容反代服务器。
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Rust](https://img.shields.io/badge/rust-1.75+-orange?logo=rust)](https://www.rust-lang.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](#)
 
-[快速开始](#快速开始) · [多协议反代](#多协议反代服务器) · [API 参考](#api-参考) · [协议原理](#协议原理)
+[Python SDK](#快速开始) · [Rust 工具箱](windsurf-toolkit/) · [多协议反代](#多协议反代服务器) · [API 参考](#api-参考)
 
 </div>
 
@@ -21,7 +22,22 @@
 
 [Windsurf](https://windsurf.com) 是一个 AI 编程 IDE（类似 Cursor），底层通过 **Connect Protocol**（gRPC-over-HTTP/1.1 + JSON）与服务器通信。
 
-本项目对 Windsurf 的 Language Server 二进制进行了完整逆向工程，将全部通信协议封装为 Python SDK：
+本项目对 Windsurf 的 Language Server 二进制进行了完整逆向工程，提供两套实现：
+
+### 两套实现
+
+| | Python SDK (`windsurf_api/`) | Rust 工具箱 (`windsurf-toolkit/`) |
+|---|---|---|
+| **定位** | 库 / 可嵌入 | 单文件 .exe / 开箱即用 |
+| **多协议反代** | ✅ OpenAI / Anthropic / Gemini | ✅ OpenAI / Anthropic / Gemini |
+| **gRPC 服务** | 13 个服务，567+ 方法 | 核心子集 |
+| **GUI 面板** | — | ✅ 原生桌面 (egui) |
+| **Pro 注入** | ✅ | ✅ 自动守护 |
+| **Key 管理** | ✅ Key 池轮换 | ✅ 批量验证 + 监控 |
+| **依赖** | 零（标准库） | 编译为单文件 ~5MB |
+| **CLI** | `python -m windsurf_api` | `windsurf-toolkit` |
+
+### 特性总览
 
 | 特性 | 说明 |
 |------|------|
@@ -29,8 +45,8 @@
 | **567+ RPC 方法** | 每个方法对应一个服务端接口，100% 覆盖 |
 | **多协议反代** | 内置 OpenAI / Anthropic / Gemini 三协议兼容代理 |
 | **高级工具集** | 批量注册、Pro 注入守护、Cascade 自动化 |
-| **零依赖** | 仅使用 Python 标准库，无需安装任何第三方包 |
-| **CLI 工具** | 命令行直接操作，无需写代码 |
+| **零依赖 (Python)** | 仅使用 Python 标准库，无需安装任何第三方包 |
+| **单文件 (Rust)** | 编译产物 ~5MB .exe，零运行时依赖 |
 
 ---
 
@@ -475,6 +491,22 @@ WindSurf-gRPC-API/
         ├── account_factory.py  # 批量注册
         ├── pro_daemon.py       # Pro 注入守护
         └── cascade_bot.py      # Cascade 自动化
+
+windsurf-toolkit/               # Rust 工具箱 (单文件 .exe)
+├── Cargo.toml                  # Rust 项目配置
+├── README.md                   # Rust 工具箱文档
+└── src/
+    ├── main.rs                 # CLI 入口
+    ├── client/                 # Windsurf Connect 协议客户端
+    ├── proxy/                  # 多协议反代 (axum)
+    │   ├── server.rs           # 路由 + 状态管理
+    │   ├── streaming.rs        # SSE 流式转换
+    │   ├── anthropic.rs        # Anthropic 兼容层
+    │   └── gemini.rs           # Gemini 兼容层
+    ├── gui/                    # 原生 GUI 面板 (egui, 12 页)
+    ├── daemon/                 # Pro 注入守护进程
+    ├── monitor/                # 额度监控
+    └── web/                    # Web Dashboard
 ```
 
 ---
